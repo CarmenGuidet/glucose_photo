@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "312244461578",
+    "project_id": "glucosephoto-f84d8",
+    "storage_bucket": "glucosephoto-f84d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312244461578:android:b1cd5aae2acb8ccad3fff3",
+        "android_client_info": {
+          "package_name": "com.carmenguidet.glucosephoto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "312244461578-qc575nerrb4601ckm1mk1qqk8cuq1clg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMq0JMPOnqWrLunGMTx2dF6zElhKz0VcA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "312244461578-qc575nerrb4601ckm1mk1qqk8cuq1clg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312244461578:android:8693817f709c8713d3fff3",
+        "android_client_info": {
+          "package_name": "com.carmenguidetgomez.glucemy_photo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "312244461578-qc575nerrb4601ckm1mk1qqk8cuq1clg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMq0JMPOnqWrLunGMTx2dF6zElhKz0VcA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "312244461578-qc575nerrb4601ckm1mk1qqk8cuq1clg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/Añadir_muestra"
+        android:title="Añadir muestra"
+        tools:ignore="HardcodedText" />
+
+    <item android:id="@+id/Ordenar"
+        android:title="Ordenar"
+
+        tools:ignore="HardcodedText">
+
+        <menu>
+            <item android:id="@+id/Ordenar_fecha"
+                android:title="Fecha" />
+            <item android:id="@+id/Ordenar_glucosa"
+                android:title="Glucosa" />
+        </menu>
+
+    </item>
+    <item android:id="@+id/info_app"
+        android:title="Información de la aplicacion"
+        tools:ignore="HardcodedText" />
+    <item
+        android:id="@+id/Logout"
+        android:title="Cerrar sesión"
+        tools:ignore="HardcodedText" />
+
+</menu>
