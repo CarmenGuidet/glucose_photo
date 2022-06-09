@@ -35,5 +35,11 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="camara">Camara</string>
-
+    <string-array name="typesOfDiabetes">
+        <item>Diabetes tipo 1</item>
+        <item>Diabetes tipo 2</item>
+        <item>Diabetes gestacional</item>
+        <item>Prediabetes</item>
+        <item>No tengo diabetes</item>
+    </string-array>
 </resources>

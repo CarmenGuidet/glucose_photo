@@ -1,7 +1,6 @@
 package com.carmenguidetgomez.glucemyphoto;
 
 public class Glucose {
-    private String name;
     private double glucose;
     private double media;
     private String url_photo;
