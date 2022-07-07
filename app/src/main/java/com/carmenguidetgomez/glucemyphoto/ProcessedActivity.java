@@ -75,7 +75,8 @@ public class ProcessedActivity extends AppCompatActivity {
     TextView textViewDate;
     TextView textViewGlucosa;
     Uri imagenUri;
-
+    ImageView glucoseImage;
+    ImageView dataImage;
     int SELEC_IMAGEN = 200;
     int PICK_IMAGE_REQUEST = 100;
 
@@ -97,6 +98,16 @@ public class ProcessedActivity extends AppCompatActivity {
         textViewGlucosa = findViewById(R.id.textViewGlucosa);
         textViewDate = findViewById(R.id.textViewDate);
         textViewInfoGlucose = findViewById(R.id.textViewInfoGlucose);
+        glucoseImage = findViewById(R.id.ic_glucose);
+        dataImage = findViewById(R.id.ic_calendar);
+
+        textViewDate.setVisibility(View.INVISIBLE);
+        textViewGlucosa.setVisibility(View.INVISIBLE);
+        textViewInfoGlucose.setVisibility(View.INVISIBLE);
+        imageView.setVisibility(View.INVISIBLE);
+        glucoseImage.setVisibility(View.INVISIBLE);
+        dataImage.setVisibility(View.INVISIBLE);
+        processing.setVisibility(View.INVISIBLE);
 
         mStorage = FirebaseStorage.getInstance().getReference();
 
@@ -161,6 +172,11 @@ public class ProcessedActivity extends AppCompatActivity {
             Bitmap bitmap_route = BitmapFactory.decodeFile(routeImage);
             Mat sourceImage = new Mat();
             Utils.bitmapToMat(bitmap_route, sourceImage);
+
+            //Mat sourceImage2 = GetGlucose(sourceImage);
+            //Bitmap bitmap_Uri2 =convertMatToBitMap(sourceImage2);
+            //imageView.setImageBitmap(bitmap_Uri2);
+
             final double media = GetGlucose(sourceImage);
             final double glucose = 5.4525 * media - 75.72;
             BigDecimal bd = new BigDecimal(glucose).setScale(2, RoundingMode.HALF_UP);
@@ -170,8 +186,8 @@ public class ProcessedActivity extends AppCompatActivity {
             textViewDate.setText(dateTime);
             processing = findViewById(R.id.buttonProcessing);
 
-
             infoGlucose(glucose_round);
+
             processing.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -185,6 +201,14 @@ public class ProcessedActivity extends AppCompatActivity {
             try {
                 Bitmap bitmap_Uri = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imagenUri);
                 selectedImagePath = saveToInternalStorage(bitmap_Uri);
+                textViewDate.setVisibility(View.VISIBLE);
+                textViewGlucosa.setVisibility(View.VISIBLE);
+                textViewInfoGlucose.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.VISIBLE);
+                glucoseImage.setVisibility(View.VISIBLE);
+                dataImage.setVisibility(View.VISIBLE);
+                processing.setVisibility(View.VISIBLE);
+
                 Mat sourceImage = new Mat();
                 Calendar calendar = Calendar.getInstance();
 
@@ -198,6 +222,9 @@ public class ProcessedActivity extends AppCompatActivity {
 
                 imageView.setImageBitmap(bitmap_Uri);
 
+                //Mat sourceImage2 = GetGlucose(sourceImage);
+                //Bitmap bitmap_Uri2 =convertMatToBitMap(sourceImage2);
+                //imageView.setImageBitmap(bitmap_Uri2);
 
                 final double glucose = 5.4525 * media - 75.72;
                 BigDecimal bd = new BigDecimal(glucose).setScale(2, RoundingMode.HALF_UP);
@@ -274,33 +301,6 @@ public class ProcessedActivity extends AppCompatActivity {
         return cutImage;
     }
 
-    public double mean_Mat(Mat mat) {
-        MatOfDouble mean_hsv = new MatOfDouble();
-        MatOfDouble std_hsv = new MatOfDouble();
-        Core.meanStdDev(mat, mean_hsv, std_hsv);
-        double mean_sum = 0.0;
-        double[] mean_arr = mean_hsv.toArray();
-        for (int i = 0; i < mean_arr.length; i++) {
-            mean_sum += mean_arr[i];
-        }
-
-        return mean_sum;
-    }
-
-    public double std_Mat(Mat mat) {
-        MatOfDouble mean_hsv = new MatOfDouble();
-        MatOfDouble std_hsv = new MatOfDouble();
-        Core.meanStdDev(mat, mean_hsv, std_hsv);
-        double std_sum = 0.0;
-        double[] std_arr = std_hsv.toArray();
-        for (int i = 0; i < std_arr.length; i++) {
-            std_sum += std_arr[i];
-        }
-
-        return std_sum;
-    }
-
-
     private int MaxPosArray(double[] Array) {
         double iNumeroMayor = 0;
         int iPosicion = 0;
@@ -313,16 +313,6 @@ public class ProcessedActivity extends AppCompatActivity {
         return iPosicion;
     }
 
-    private double MaxArray(double[] Array) {
-        double iNumeroMayor = 0;
-        for (int x = 1; x < Array.length; x++) {
-            if (Array[x] > iNumeroMayor) {
-                iNumeroMayor = Array[x];
-
-            }
-        }
-        return iNumeroMayor;
-    }
 
     private double mymedia(Mat mat) {
         Mat hsv_image_pro = new Mat();
@@ -349,14 +339,6 @@ public class ProcessedActivity extends AppCompatActivity {
         return media;
     }
 
-    private Double MediaVector(double[] vector) {
-        double suma_media = 0;
-        for (int i = 0; i < vector.length; i++) {
-            suma_media = suma_media + vector[i];
-        }
-        double media = suma_media / vector.length;
-        return media;
-    }
 
     private double GetGlucose(Mat mat_image) {
 
@@ -383,6 +365,7 @@ public class ProcessedActivity extends AppCompatActivity {
 
         Mat hierarchy = new Mat();
         Imgproc.findContours(mask1, contourList, hierarchy, Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_NONE);
+
         Mat contours = new Mat();
         contours.create(maskblue.rows(), maskblue.cols(), CvType.CV_8UC3);
         Point[] centers = new Point[contourList.size()];
@@ -391,7 +374,7 @@ public class ProcessedActivity extends AppCompatActivity {
         Rect[] boundRect = new Rect[contourList.size()];
         for (int i = 0; i < contourList.size(); i++) {
             contoursPoly[i] = new MatOfPoint2f();
-            Imgproc.approxPolyDP(new MatOfPoint2f(contourList.get(i).toArray()), contoursPoly[i], 4, true);
+            Imgproc.approxPolyDP(new MatOfPoint2f(contourList.get(i).toArray()), contoursPoly[i], 4, false);
             boundRect[i] = Imgproc.boundingRect(new MatOfPoint(contoursPoly[i].toArray()));
             centers[i] = new Point();
             Imgproc.minEnclosingCircle(contoursPoly[i], centers[i], radius[i]);
@@ -411,12 +394,14 @@ public class ProcessedActivity extends AppCompatActivity {
             //mediaS[i] = mymedia(cut_Mat);
         }
 
+
         //double media = MaxArray(mediaS);
         //double mediavector = MediaVector(mediaS);
 
         int posmaxArea = MaxPosArray(area);
         cut_Mat = cutImage(mat_image, boundRect[posmaxArea]);
         double media = mymedia(cut_Mat);
+
 
 
         return media;
@@ -473,11 +458,11 @@ public class ProcessedActivity extends AppCompatActivity {
                             if (diabetes.equals("No tengo diabetes")) {
                                 Toast.makeText(getApplicationContext(), "No tengo diabetes", Toast.LENGTH_SHORT).show();
                                 if(glucose < 108 && glucose > 60){
-                                    textViewInfoGlucose.setText("Diabetes tipo 1- tiene usted valores de glucosa normales. Siga cuidandose.");
+                                    textViewInfoGlucose.setText("No tiene diabetes tiene usted valores de glucosa normales. Siga cuidandose.");
                                     textViewInfoGlucose.setTextColor(Color.GREEN);
                                 }
                                 else{
-                                    textViewInfoGlucose.setText("Diabetes tipo 1 - sus valores de glucosa no son normales. Consulte a su médico.");
+                                    textViewInfoGlucose.setText("No tiene diabetes - sus valores de glucosa no son normales. Consulte a su médico.");
                                     textViewInfoGlucose.setTextColor(Color.RED);
                                 }
                             }
@@ -512,6 +497,8 @@ public class ProcessedActivity extends AppCompatActivity {
                     });
 
     }
+
+
 
 
 }

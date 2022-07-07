@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/ic_glucose"
-            android:text=" Glucosa[gm/dl]:"
+            android:text=" Glucosa[gm/dL]:"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
@@ -55,6 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/ic_glucose"
             android:layout_toEndOf="@id/ic_calendar"
+            android:text="Fecha:"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     </RelativeLayout>

@@ -6,21 +6,8 @@
         android:title="Añadir muestra"
         tools:ignore="HardcodedText" />
 
-    <item android:id="@+id/Ordenar"
-        android:title="Ordenar"
-
-        tools:ignore="HardcodedText">
-
-        <menu>
-            <item android:id="@+id/Ordenar_fecha"
-                android:title="Fecha" />
-            <item android:id="@+id/Ordenar_glucosa"
-                android:title="Glucosa" />
-        </menu>
-
-    </item>
     <item android:id="@+id/info_app"
-        android:title="Información de la aplicacion"
+        android:title="Información de la aplicación"
         tools:ignore="HardcodedText" />
     <item
         android:id="@+id/Logout"
